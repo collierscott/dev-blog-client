@@ -1,4 +1,9 @@
-import {BLOG_POST_LIST_REQUEST, BLOG_POST_LIST_ADD, BLOG_POST_LIST_RECEIVED, BLOG_POST_LIST_ERROR} from "../actions/actions";
+import {
+  BLOG_POST_LIST_REQUEST,
+  BLOG_POST_LIST_ADD,
+  BLOG_POST_LIST_RECEIVED,
+  BLOG_POST_LIST_ERROR
+} from "../actions/constants";
 
 export default(
   state={
