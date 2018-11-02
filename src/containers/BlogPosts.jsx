@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import BlogPostList from '../components/BlogPostList';
-import {blogPostListFetch} from '../actions/actions';
+import {blogPostListFetch} from '../actions/blogActions';
 import Spinner from '../components/Spinner';
 import Message from '../components/Message';
 
