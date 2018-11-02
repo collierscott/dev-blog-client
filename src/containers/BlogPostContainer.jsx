@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import BlogPost from '../components/BlogPost';
-import {blogPostFetch, blogPostUnload} from '../actions/actions';
+import {blogPostFetch, blogPostUnload} from '../actions/blogActions';
 import Spinner from '../components/Spinner';
 import Message from '../components/Message';
+import CommentListContainer from './CommentListContainer';
 
 class BlogPostContainer extends Component {
 	componentDidMount() {
@@ -29,7 +30,8 @@ class BlogPostContainer extends Component {
     return (
       <div>
         <BlogPost post={post} isFetching={isFetching}/>
-      </div>
+				{post && <CommentListContainer blogPostId={this.props.match.params.id} />}
+			</div>
     );
   }
 }

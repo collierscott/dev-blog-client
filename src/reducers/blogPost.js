@@ -24,11 +24,6 @@ export default(
         isFetching: false
       };
     case BLOG_POST_ERROR:
-      return {
-        ...state,
-        post: null,
-        isFetching: false
-      };
     case BLOG_POST_UNLOAD:
       return {
         ...state,
