@@ -3,6 +3,7 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'http://localhost:8000/api';
+// This will get just the body of the response
 const responseBody = response => response.body;
 
 export const requests = {
