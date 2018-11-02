@@ -9,10 +9,10 @@ class BlogPosts extends Component {
 	};
 
   render() {
-  	const {posts} = this.props;
+  	const {posts, isFetching} = this.props;
     return (
       <div>
-        <BlogPostList posts={posts}/>
+        <BlogPostList posts={posts} isFetching={isFetching}/>
       </div>
     );
   }
