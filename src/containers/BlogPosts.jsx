@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import BlogPostList from '../components/BlogPostList';
-import {blogPostAdd, blogPostListFetch} from '../actions/actions';
+import {blogPostListFetch} from '../actions/actions';
+import Spinner from '../components/Spinner';
+import Message from '../components/Message';
 
 class BlogPosts extends Component {
 	componentDidMount() {
@@ -10,6 +12,15 @@ class BlogPosts extends Component {
 
   render() {
   	const {posts, isFetching} = this.props;
+
+		if(isFetching) {
+			return(<Spinner />);
+		}
+
+		if(!posts || 0 === posts.length) {
+			return(<Message message="No blog posts were found" />);
+		}
+
     return (
       <div>
         <BlogPostList posts={posts} isFetching={isFetching}/>
@@ -23,8 +34,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-	blogPostAdd,
-	blogPostListFetch
+	blogPostListFetch,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPosts);

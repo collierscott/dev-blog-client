@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router";
 import LoginForm from "./LoginForm";
-import BlogPosts from '../ocntainers/BlogPosts';
+import BlogPosts from '../containers/BlogPosts';
+import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
 				<Header/>
 				<Switch>
 					<Route path="/login" component={LoginForm}/>
-					<Route path="/" component={BlogPosts}/>
+					<Route path="/blog-post/:id" component={BlogPostContainer}/>
+					<Route exact path="/" component={BlogPosts}/>
 				</Switch>
 			</div>
     );
