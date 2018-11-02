@@ -2,10 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {renderField} from '../Form/form';
-import {requests} from "../agent";
-import {USER_LOGIN_SUCCESS} from "../actions/constants";
+import {userLoginAttempt, userLoginSuccess} from '../actions/userActions';
 
 class LoginForm extends Component {
+	componentDidUpdate(prevProps) {
+		if(prevProps.token !== this.props.token) {
+			this.props.history.push('/');
+		}
+	}
+
 	onSubmit(values) {
 		console.log(values);
 		return this.props.userLoginAttempt(
@@ -15,9 +20,11 @@ class LoginForm extends Component {
 	};
 
   render() {
-		const {handleSubmit} = this.props;
+		const {handleSubmit, error} = this.props;
+
     return (
       <div className="text-center">
+				{error && <div className="alert alert-danger">{error}</div>}
 				<form className="mt-4" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
 					<div className="form-group">
 						<Field name="username" label="Username" type="text" component={renderField} />
@@ -30,29 +37,15 @@ class LoginForm extends Component {
   }
 }
 
-export const userLoginAttempt = (username, password) => {
-	return (dispatch) => {
-		return requests.post('/login_check', {username, password}, false)
-			.then(
-				response =>dispatch(userLoginSuccess(response.token, response.id))
-			).catch(error => {
-				console.log("failed")
-			})
-	}
-};
-
-export const userLoginSuccess = (token, userId) => {
-	return {
-		type: USER_LOGIN_SUCCESS,
-		token,
-		userId
-	}
-};
+const mapStateToProps = state => ({
+	...state.auth
+});
 
 const mapDispatchToProps = {
-	userLoginAttempt
+	userLoginAttempt,
+	userLoginSuccess,
 };
 
 export default reduxForm({
 	form: 'LoginForm'
-})(connect(null, mapDispatchToProps)(LoginForm));
+})(connect(mapStateToProps, mapDispatchToProps)(LoginForm));

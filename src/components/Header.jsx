@@ -1,12 +1,15 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-const Header = () => {
+const Header = ({isAuthenticated}) => {
   return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
 				<NavLink exact to="/" className="navbar-brand">Home</NavLink>
 				<span className="navbar-text">
-					<NavLink exact to="/login">Sign in</NavLink>
+					{isAuthenticated ?
+						<span>Hello</span> :
+						<NavLink exact to="/login">Sign in</NavLink>
+					}
 				</span>
 			</nav>
   )
