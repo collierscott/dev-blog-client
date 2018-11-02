@@ -16,6 +16,15 @@ class App extends Component {
 			requests.setToken(token);
 		}
 	}
+
+	componentDidUpdate(prevProps) {
+		console.log(prevProps);
+		const {userId} = this.props;
+		if (prevProps.userId !== userId && null !== userId) {
+
+		}
+	}
+
   render() {
 		const {isAuthenticated} = this.props;
     return (
