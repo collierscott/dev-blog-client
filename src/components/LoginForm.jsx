@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {renderField} from '../Form/form';
 import {requests} from "../agent";
+import {USER_LOGIN_SUCCESS} from "../actions/constants";
 
 class LoginForm extends Component {
 	onSubmit(values) {
@@ -21,7 +22,7 @@ class LoginForm extends Component {
 					<div className="form-group">
 						<Field name="username" label="Username" type="text" component={renderField} />
 						<Field name="password" label="Password" type="password" component={renderField} />
-					<button type="submit" className="btn btn-primary btn-block">Submit</button>
+					  <button type="submit" className="btn btn-primary btn-block">Submit</button>
 					</div>
 				</form>
       </div>
@@ -31,12 +32,20 @@ class LoginForm extends Component {
 
 export const userLoginAttempt = (username, password) => {
 	return (dispatch) => {
-		return requests.post('/login_check', {username, password})
+		return requests.post('/login_check', {username, password}, false)
 			.then(
-				response => console.log(response)
+				response =>dispatch(userLoginSuccess(response.token, response.id))
 			).catch(error => {
 				console.log("failed")
 			})
+	}
+};
+
+export const userLoginSuccess = (token, userId) => {
+	return {
+		type: USER_LOGIN_SUCCESS,
+		token,
+		userId
 	}
 };
 
