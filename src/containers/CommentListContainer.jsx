@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Comment from '../components/Comment';
 import {commentListFetch, commentListUnload} from '../actions/commentsActions';
 import Spinner from '../components/Spinner';
 import Message from '../components/Message';
+import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
 class CommentListContainer extends Component {
@@ -28,9 +28,7 @@ class CommentListContainer extends Component {
     return (
       <div>
 				<h3>Comments</h3>
-				{comments.map(comment => (
-					<Comment key={comment.id} comment={comment} />
-				))}
+        <CommentList comments={comments}/>
         {isAuthenticated && <CommentForm blogPostId={blogPostId} />}
       </div>
     );
