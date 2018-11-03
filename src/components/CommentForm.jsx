@@ -36,4 +36,4 @@ const mapDispatchToProps = {
 
 export default reduxForm({
   form: 'CommentForm'
-})(connect(null, null)(CommentForm));
+})(connect(null, mapDispatchToProps)(CommentForm));

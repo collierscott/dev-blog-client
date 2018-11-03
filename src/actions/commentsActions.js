@@ -55,11 +55,12 @@ export const commentAdd = (comment, blogPostId) => {
       '/comments',
       {
         content: comment,
-        blogPost: `/api/blog_posts/${blogPostId}`
+        post: `/api/blog_posts/${blogPostId}`
       }
     ).then(
       response => dispatch(commentAdded(response))
     ).catch((error) => {
+      console.log(error);
       if (401 === error.response.status) {
         return dispatch(userLogout());
       }

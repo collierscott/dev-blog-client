@@ -16,7 +16,7 @@ class CommentListContainer extends Component {
 	}
 
   render() {
-		const {comments, isFetching, isAuthenticated} = this.props;
+		const {comments, isFetching, isAuthenticated, blogPostId} = this.props;
 		//console.log(comments);
 		if(isFetching) {
 			return(<Spinner/>);
@@ -31,7 +31,7 @@ class CommentListContainer extends Component {
 				{comments.map(comment => (
 					<Comment key={comment.id} comment={comment} />
 				))}
-        {isAuthenticated && <CommentForm/>}
+        {isAuthenticated && <CommentForm blogPostId={blogPostId} />}
       </div>
     );
   }
