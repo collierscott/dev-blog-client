@@ -6,7 +6,7 @@ import BlogPosts from '../containers/BlogPosts';
 import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
 import {requests} from '../agent';
-import {userProfileFetch} from '../actions/userActions';
+import {userProfileFetch, userSetId} from '../actions/userActions';
 
 class App extends Component {
 	constructor(props) {
@@ -18,9 +18,18 @@ class App extends Component {
 		}
 	}
 
+	componentDidMount() {
+	  const {userSetId} = this.props;
+		const userId = window.localStorage.getItem('userId');
+
+		if(userId) {
+      userSetId(userId);
+		}
+	}
+
   componentDidUpdate(prevProps) {
-		const {userId, userProfileFetch} = this.props;
-		if (prevProps.userId !== userId && null !== userId) {
+		const {userId, userData, userProfileFetch} = this.props;
+		if (prevProps.userId !== userId && null !== userId && userData === null) {
 			userProfileFetch(userId);
 		}
 	}
@@ -46,6 +55,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
 	userProfileFetch,
+  userSetId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

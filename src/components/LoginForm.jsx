@@ -12,7 +12,6 @@ class LoginForm extends Component {
 	}
 
 	onSubmit(values) {
-		console.log(values);
 		return this.props.userLoginAttempt(
 			values.username,
 			values.password

@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import Spinner from './Spinner';
 
 const Header = ({isAuthenticated, userData}) => {
   return (
