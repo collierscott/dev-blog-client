@@ -8,18 +8,34 @@ import Paginator from '../components/Paginator';
 
 class BlogPostListContainer extends Component {
 	componentDidMount() {
-		this.props.blogPostListFetch();
+		this.props.blogPostListFetch(this.getQueryParamPage());
 	};
 
 	componentDidUpdate(prevProps) {
-	  const {blogPostListFetch, currentPage} = this.props;
+	  const {blogPostListFetch, currentPage, blogPostListSetPage} = this.props;
+
+    if (prevProps.match.params.page !== this.getQueryParamPage()) {
+      blogPostListSetPage(this.getQueryParamPage());
+    }
+
 	  if(prevProps.currentPage !== currentPage) {
       blogPostListFetch(currentPage);
     }
   }
 
+  getQueryParamPage = () => {
+    console.log(this.props.match.params.page);
+	  return Number(this.props.match.params.page) || 1;
+  };
+
+	changePage = page => {
+    const {history, blogPostListSetPage} = this.props;
+    blogPostListSetPage(page);
+    history.push(`/${page}`);
+  };
+
   render() {
-  	const {posts, isFetching, blogPostListSetPage, currentPage} = this.props;
+  	const {posts, isFetching, currentPage} = this.props;
 
 		if(isFetching) {
 			return(<Spinner />);
@@ -32,7 +48,7 @@ class BlogPostListContainer extends Component {
     return (
       <div>
         <BlogPostList posts={posts} isFetching={isFetching} />
-				<Paginator currentPage={currentPage} pageCount={10} setPage={blogPostListSetPage} />
+				<Paginator currentPage={currentPage} pageCount={10} setPage={this.changePage} />
       </div>
     );
   }

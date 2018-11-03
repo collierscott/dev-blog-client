@@ -42,7 +42,7 @@ class App extends Component {
 				<Switch>
 					<Route path="/login" component={LoginForm}/>
 					<Route path="/blog-post/:id" component={BlogPostContainer}/>
-					<Route exact path="/" component={BlogPostListContainer}/>
+					<Route exact path="/:page?" component={BlogPostListContainer}/>
 				</Switch>
 			</div>
     );
