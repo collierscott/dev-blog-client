@@ -3,6 +3,7 @@ import {
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
   COMMENT_LIST_UNLOAD,
+  COMMENT_ADDED,
 } from "../actions/constants";
 
 export default(
@@ -22,6 +23,11 @@ export default(
         ...state,
         comments: action.data['hydra:member'],
         isFetching: false
+      };
+    case COMMENT_ADDED:
+      return {
+        ...state,
+        comments: [action.comment, ...state.comments]
       };
     case COMMENT_LIST_ERROR:
     case COMMENT_LIST_UNLOAD:
