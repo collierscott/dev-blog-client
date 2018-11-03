@@ -5,7 +5,8 @@ import LoginForm from "./LoginForm";
 import BlogPosts from '../containers/BlogPosts';
 import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
-import {requests} from "../agent";
+import {requests} from '../agent';
+import {userProfileFetch} from '../actions/userActions';
 
 class App extends Component {
 	constructor(props) {
@@ -17,19 +18,18 @@ class App extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
-		console.log(prevProps);
-		const {userId} = this.props;
+  componentDidUpdate(prevProps) {
+		const {userId, userProfileFetch} = this.props;
 		if (prevProps.userId !== userId && null !== userId) {
-
+			userProfileFetch(userId);
 		}
 	}
 
   render() {
-		const {isAuthenticated} = this.props;
+		const {isAuthenticated, userData} = this.props;
     return (
     	<div>
-				<Header isAuthenticated={isAuthenticated}/>
+				<Header isAuthenticated={isAuthenticated} userData={userData} />
 				<Switch>
 					<Route path="/login" component={LoginForm}/>
 					<Route path="/blog-post/:id" component={BlogPostContainer}/>
@@ -41,7 +41,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-	...state.auth
+	...state.auth,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+	userProfileFetch,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

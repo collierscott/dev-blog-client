@@ -1,17 +1,23 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import Spinner from './Spinner';
 
-const Header = ({isAuthenticated}) => {
+const Header = ({isAuthenticated, userData}) => {
+
+  if(isAuthenticated && null === userData) {
+    return (<Spinner />)
+  }
+
   return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-				<NavLink exact to="/" className="navbar-brand">Home</NavLink>
-				<span className="navbar-text">
-					{isAuthenticated ?
-						<span>Hello</span> :
-						<NavLink exact to="/login">Sign in</NavLink>
-					}
-				</span>
-			</nav>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <NavLink exact to="/" className="navbar-brand">Home</NavLink>
+        <span className="navbar-text">
+            {isAuthenticated ?
+              <span>Hello {userData.name}</span> :
+              <NavLink exact to="/login">Sign in</NavLink>
+            }
+        </span>
+    </nav>
   )
 };
 

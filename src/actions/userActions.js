@@ -110,8 +110,8 @@ export const userProfileReceived = (userId, userData) => {
 export const userProfileFetch = (userId) => {
   return (dispatch) => {
     dispatch(userProfileRequest());
-    return requests.get(`/users/${userId}`, true).then(
-      response => dispatch(userProfileReceived(userId, response))
-    ).catch(() => dispatch(userProfileError(userId)))
+    return requests.get(`/users/${userId}`, true)
+      .then(response => dispatch(userProfileReceived(userId, response)))
+      .catch(() => dispatch(userProfileError(userId)))
   }
 };
