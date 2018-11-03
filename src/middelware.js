@@ -16,6 +16,8 @@ export const tokenMiddleware = store => next => action => {
       break;
     case USER_PROFILE_ERROR:
       const state = store.getState().auth;
+      console.log(state);
+      console.log(action.userId);
       if (state.userId === action.userId && state.userData === null) {
         store.dispatch(userLogout());
       }
