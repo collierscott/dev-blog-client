@@ -24,7 +24,6 @@ class BlogPostListContainer extends Component {
   }
 
   getQueryParamPage = () => {
-    console.log(this.props.match.params.page);
 	  return Number(this.props.match.params.page) || 1;
   };
 
@@ -34,8 +33,20 @@ class BlogPostListContainer extends Component {
     history.push(`/${page}`);
   };
 
+  onNextPageClick = e => {
+    const {currentPage, pageCount} = this.props;
+    const newPage = Math.min(currentPage + 1, pageCount);
+    this.changePage(newPage);
+  };
+
+  onPrevPageClick = e => {
+    const {currentPage} = this.props;
+    const newPage = Math.max(currentPage - 1, 1);
+    this.changePage(newPage);
+  };
+
   render() {
-  	const {posts, isFetching, currentPage} = this.props;
+    const {posts, isFetching, currentPage, pageCount} = this.props;
 
 		if(isFetching) {
 			return(<Spinner />);
@@ -48,7 +59,13 @@ class BlogPostListContainer extends Component {
     return (
       <div>
         <BlogPostList posts={posts} isFetching={isFetching} />
-				<Paginator currentPage={currentPage} pageCount={10} setPage={this.changePage} />
+				<Paginator
+          currentPage={currentPage}
+          pageCount={pageCount}
+          setPage={this.changePage}
+          nextPage={this.onNextPageClick}
+          prevPage={this.onPrevPageClick}
+        />
       </div>
     );
   }
