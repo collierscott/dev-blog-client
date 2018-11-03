@@ -6,7 +6,7 @@ import BlogPosts from '../containers/BlogPosts';
 import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
 import {requests} from '../agent';
-import {userProfileFetch, userSetId} from '../actions/userActions';
+import {userProfileFetch, userSetId, userLogout} from '../actions/userActions';
 
 class App extends Component {
 	constructor(props) {
@@ -35,10 +35,10 @@ class App extends Component {
 	}
 
   render() {
-		const {isAuthenticated, userData} = this.props;
+		const {isAuthenticated, userData, userLogout} = this.props;
     return (
     	<div>
-				<Header isAuthenticated={isAuthenticated} userData={userData} />
+				<Header isAuthenticated={isAuthenticated} userData={userData} logout={userLogout} />
 				<Switch>
 					<Route path="/login" component={LoginForm}/>
 					<Route path="/blog-post/:id" component={BlogPostContainer}/>
@@ -56,6 +56,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
 	userProfileFetch,
   userSetId,
+	userLogout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
