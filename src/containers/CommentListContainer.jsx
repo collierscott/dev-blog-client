@@ -4,6 +4,7 @@ import Comment from '../components/Comment';
 import {commentListFetch, commentListUnload} from '../actions/commentsActions';
 import Spinner from '../components/Spinner';
 import Message from '../components/Message';
+import CommentForm from '../components/CommentForm';
 
 class CommentListContainer extends Component {
 	componentDidMount() {
@@ -15,7 +16,7 @@ class CommentListContainer extends Component {
 	}
 
   render() {
-		const {comments, isFetching} = this.props;
+		const {comments, isFetching, isAuthenticated} = this.props;
 		//console.log(comments);
 		if(isFetching) {
 			return(<Spinner/>);
@@ -30,6 +31,7 @@ class CommentListContainer extends Component {
 				{comments.map(comment => (
 					<Comment key={comment.id} comment={comment} />
 				))}
+        {isAuthenticated && <CommentForm/>}
       </div>
     );
   }
@@ -37,7 +39,8 @@ class CommentListContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-		...state.commentList
+		...state.commentList,
+		isAuthenticated: state.auth.isAuthenticated,
 	}
 };
 

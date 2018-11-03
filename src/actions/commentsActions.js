@@ -3,8 +3,12 @@ import {
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
   COMMENT_LIST_UNLOAD,
+  COMMENT_ADDED,
 } from './constants';
 import {requests} from "../agent";
+import {userLogout} from './userActions';
+import {SubmissionError} from "redux-form";
+import {parseApiErrors} from "../apiUtils";
 
 export const commentListRequest = () => (
   {
@@ -37,5 +41,29 @@ export const commentListFetch = (id) => {
     return requests.get(`/blog_posts/${id}/comments`)
       .then(response => dispatch(commentListReceived(response)))
       .catch(error => dispatch(commentListError(error)))
+  }
+};
+
+export const commentAdded = (comment) => ({
+  type: COMMENT_ADDED,
+  comment
+});
+
+export const commentAdd = (comment, blogPostId) => {
+  return (dispatch) => {
+    return requests.post(
+      '/comments',
+      {
+        content: comment,
+        blogPost: `/api/blog_posts/${blogPostId}`
+      }
+    ).then(
+      response => dispatch(commentAdded(response))
+    ).catch((error) => {
+      if (401 === error.response.status) {
+        return dispatch(userLogout());
+      }
+      throw new SubmissionError(parseApiErrors(error));
+    })
   }
 };
