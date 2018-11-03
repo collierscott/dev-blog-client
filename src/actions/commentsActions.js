@@ -60,7 +60,6 @@ export const commentAdd = (comment, blogPostId) => {
     ).then(
       response => dispatch(commentAdded(response))
     ).catch((error) => {
-      console.log(error);
       if (401 === error.response.status) {
         return dispatch(userLogout());
       }
