@@ -8,6 +8,8 @@ import {blogPostAdd, blogPostFormUnload} from "../actions/blogActions";
 import {imageDelete} from "../actions/imageActions";
 import ImageUpload from "./ImageUpload";
 import {ImageBrowser} from "./ImageBrowser";
+import {Editor} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 class BlogPostForm extends React.Component {
   onSubmit(values) {
@@ -38,6 +40,7 @@ class BlogPostForm extends React.Component {
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <Field name="title" label="Title:" type="text" component={renderField}/>
             <Field name="content" label="Content:" type="textarea" component={renderField}/>
+            <Editor />
 
             <ImageUpload />
             <ImageBrowser images={images}
