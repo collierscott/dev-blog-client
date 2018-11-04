@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {commentListFetch, commentListUnload} from '../actions/commentsActions';
 import Spinner from '../components/Spinner';
-import Message from '../components/Message';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
+import LoadMore from "../components/LoadMore";
 
 class CommentListContainer extends Component {
 	componentDidMount() {
@@ -15,20 +15,31 @@ class CommentListContainer extends Component {
 		this.props.commentListUnload();
 	}
 
+  onLoadMoreCommentClick = (e) => {
+    const {blogPostId, currentPage, commentListFetch} = this.props;
+    commentListFetch(blogPostId, currentPage);
+  };
+
   render() {
-		const {comments, isFetching, isAuthenticated, blogPostId} = this.props;
-		//console.log(comments);
-		if(isFetching) {
+		const {comments, isFetching, isAuthenticated, blogPostId, currentPage, pageCount} = this.props;
+		const showLoadMore = pageCount > 1 && currentPage <= pageCount;
+
+		if(isFetching && currentPage === 1) {
 			return(<Spinner/>);
 		}
 
-		if(!comments || 0 === comments.length) {
-			return(<Message message="No comments" />);
-		}
     return (
       <div>
 				<h3>Comments</h3>
-        <CommentList comments={comments}/>
+        {comments && <CommentList comments={comments}/>}
+        {
+          showLoadMore &&
+          <LoadMore
+            label="Load more comments"
+            onClick={this.onLoadMoreCommentClick}
+            disabled={isFetching}
+          />
+        }
         {isAuthenticated && <CommentForm blogPostId={blogPostId} />}
       </div>
     );
