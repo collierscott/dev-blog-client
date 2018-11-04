@@ -7,6 +7,7 @@ import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
 import {requests} from '../agent';
 import {userProfileFetch, userSetId, userLogout} from '../actions/userActions';
+import RegisterFormContainer from "../containers/RegistrationContainer";
 
 class App extends Component {
 	constructor(props) {
@@ -36,14 +37,20 @@ class App extends Component {
 
   render() {
 		const {isAuthenticated, userData, userLogout} = this.props;
+
+		const routes = (
+      <Switch>
+        <Route path="/login" component={LoginForm}/>
+        <Route path="/blog-post/:id" component={BlogPostContainer}/>
+        <Route path="/register" component={RegisterFormContainer} />
+        <Route exact path="/:page?" component={BlogPostListContainer}/>
+      </Switch>
+    );
+
     return (
     	<div>
 				<Header isAuthenticated={isAuthenticated} userData={userData} logout={userLogout} />
-				<Switch>
-					<Route path="/login" component={LoginForm}/>
-					<Route path="/blog-post/:id" component={BlogPostContainer}/>
-					<Route exact path="/:page?" component={BlogPostListContainer}/>
-				</Switch>
+        {routes}
 			</div>
     );
   }
