@@ -3,13 +3,16 @@ import {
   BLOG_POST_LIST_REQUEST,
   BLOG_POST_LIST_RECEIVED,
   BLOG_POST_LIST_ERROR ,
-  BLOG_POST_LIST_ADD,
+  BLOG_POST_FORM_UNLOAD,
   BLOG_POST_REQUEST,
   BLOG_POST_RECEIVED,
   BLOG_POST_ERROR,
   BLOG_POST_UNLOAD,
   BLOG_POST_LIST_SET_PAGE,
 } from './constants';
+import {userLogout} from './userActions';
+import {SubmissionError} from "redux-form";
+import {parseApiErrors} from "../apiUtils";
 
 export const blogPostListRequest = () => (
   {
@@ -47,16 +50,6 @@ export const blogPostListFetch = (page = 1) => {
   }
 };
 
-export const blogPostListAdd = () => (
-  {
-    type: BLOG_POST_LIST_ADD,
-    data: {
-      id: Math.floor(Math.random() * 100 + 3),
-      title: 'Hello! This is a new post.'
-    }
-  }
-);
-
 export const blogPostRequest = () => (
   {
     type: BLOG_POST_REQUEST,
@@ -90,3 +83,30 @@ export const blogPostFetch = (id) => {
       .catch(error => dispatch(blogPostError(error)))
   }
 };
+
+export const blogPostAdd = (title, content, images = []) => {
+  return (dispatch) => {
+    return requests.post(
+      '/blog_posts',
+      {
+        title,
+        content,
+        slug: title && title.replace(/ /g, "-").toLowerCase(),
+        images: images.map(image => `/api/images/${image.id}`)
+      }
+    ).catch((error) => {
+      if (401 === error.response.status) {
+        return dispatch(userLogout());
+      } else if (403 === error.response.status) {
+        throw new SubmissionError({
+          _error: 'You do not have rights to publish blog posts!'
+        });
+      }
+      throw new SubmissionError(parseApiErrors(error));
+    })
+  }
+};
+
+export const blogPostFormUnload = () => ({
+  type: BLOG_POST_FORM_UNLOAD
+});

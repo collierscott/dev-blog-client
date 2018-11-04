@@ -5,7 +5,7 @@ import {
   COMMENT_LIST_UNLOAD,
   COMMENT_ADDED,
 } from './constants';
-import {requests} from "../agent";
+import {requests} from '../agent';
 import {userLogout} from './userActions';
 import {SubmissionError} from "redux-form";
 import {parseApiErrors} from "../apiUtils";

@@ -8,6 +8,7 @@ import Header from './Header';
 import {requests} from '../agent';
 import {userProfileFetch, userSetId, userLogout} from '../actions/userActions';
 import RegisterFormContainer from "../containers/RegistrationContainer";
+import BlogPostForm from "../components/BlogPostForm";
 
 class App extends Component {
 	constructor(props) {
@@ -41,6 +42,7 @@ class App extends Component {
 		const routes = (
       <Switch>
         <Route path="/login" component={LoginForm}/>
+        <Route path="/blog-post-form" component={BlogPostForm}/>
         <Route path="/blog-post/:id" component={BlogPostContainer}/>
         <Route path="/register" component={RegisterFormContainer} />
         <Route exact path="/:page?" component={BlogPostListContainer}/>
