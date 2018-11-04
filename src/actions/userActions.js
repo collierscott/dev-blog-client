@@ -45,7 +45,7 @@ export const userRegisterSuccess = () => {
   }
 };
 
-export const userRegister = (username, password, retypedPassword, email, name) => {
+export const userRegister = (username, email, name, password, retypedPassword) => {
   return (dispatch) => {
     return requests.post('/users', {username, password, retypedPassword, email, name}, false)
       .then(() => dispatch(userRegisterSuccess()))

@@ -7,7 +7,7 @@ import BlogPostContainer from '../containers/BlogPostContainer';
 import Header from './Header';
 import {requests} from '../agent';
 import {userProfileFetch, userSetId, userLogout} from '../actions/userActions';
-import RegisterForm from "./RegisterForm";
+import RegisterFormContainer from "../containers/RegistrationContainer";
 
 class App extends Component {
 	constructor(props) {
@@ -42,7 +42,7 @@ class App extends Component {
       <Switch>
         <Route path="/login" component={LoginForm}/>
         <Route path="/blog-post/:id" component={BlogPostContainer}/>
-        <Route path="/register" component={RegisterForm} />
+        <Route path="/register" component={RegisterFormContainer} />
         <Route exact path="/:page?" component={BlogPostListContainer}/>
       </Switch>
     );
