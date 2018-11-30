@@ -1,5 +1,5 @@
 # dev-blog-client
-A reactJS client for the dev-blog-api.
+A [ReactJS](https://reactjs.org/) client for the dev-blog-api.
 
 ## Getting Started
 
